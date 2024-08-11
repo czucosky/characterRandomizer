@@ -83,6 +83,197 @@ def randomize():
     wisdom = random.randint(1, 6) + random.randint(1, 6) + random.randint(1, 6)
     charisma = random.randint(1, 6) + random.randint(1, 6) + random.randint(1, 6)
 
+    match baseRace:
+        case "Aarakocra":
+            dexterity += 2
+            wisdom += 1
+        case "Aasimar":
+            charisma += 2
+            subRace = random.choice(aasimar)
+            match subRace:
+                case "Fallen":
+                    strength += 1
+                case "Protector":
+                    wisdom += 1
+                case "Scourge":
+                    constitution += 1
+            baseRace += " - " + subRace
+        case "Bugbear":
+            strength += 2
+            dexterity += 1
+        case "Dragonborn":
+            strength += 2
+            charisma += 1
+            subRace = random.choice(dragonborn)
+            baseRace += " - " + subRace
+        case "Dwarf":
+            constitution += 2
+            subRace = random.choice(dwarf)
+            match subRace:
+                case "Duergar":
+                    strength += 1
+                case "Hill":
+                    wisdom += 1
+                case "Mountain":
+                    strength += 2
+            baseRace += " - " + subRace
+        case "Elf":
+            dexterity += 2
+            subRace = random.choice(elf)
+            match subRace:
+                case "Drow":
+                    charisma += 1
+                case "Eladrin":
+                    charisma += 1
+                case "High":
+                    intelligence += 1
+                case "Sea":
+                    constitution += 1
+                case "Shadar-kai":
+                    constitution += 1
+                case "Wood":
+                    wisdom += 1
+            baseRace += " - " + subRace
+        case "Firbolg":
+            strength += 1
+            wisdom += 2
+        case "Genasi":
+            constitution += 2
+            subRace = random.choice(genasi)
+            match subRace:
+                case "Air":
+                    dexterity += 1
+                case "Earth":
+                    strength += 1
+                case "Fire":
+                    intelligence += 1
+                case "Water":
+                    wisdom += 1
+            baseRace += " - " + subRace
+        case "Gith":
+            intelligence += 1
+            subRace = random.choice(gith)
+            match subRace:
+                case "Githyanki":
+                    strength += 2
+                case "Githzerai":
+                    wisdom += 2
+            baseRace += " - " + subRace
+        case "Gnome":
+            intelligence += 2
+            subRace = random.choice(gnome)
+            match subRace:
+                case "Deep":
+                    dexterity += 1
+                case "Forest":
+                    dexterity += 1
+                case "Rock":
+                    constitution += 1
+            baseRace += " - " + subRace
+        case "Goblin":
+            dexterity += 2
+            constitution += 1
+        case "Goliath":
+            strength += 2
+            constitution += 1
+        case "Grung":
+            dexterity += 2
+            constitution += 1
+        case "Half-Elf":
+            charisma += 2
+            subRace = random.choice(half_elf)
+            match subRace:
+                case "Base":
+                    strength += 1
+                    dexterity += 1
+                case "High":
+                    intelligence += 1
+                    dexterity += 1
+                case "Sea":
+                    constitution += 1
+                    dexterity += 1
+                case "Drow":
+                    charisma += 1
+                    dexterity += 1
+                case "Wood":
+                    wisdom += 1
+                    dexterity += 1
+            baseRace += " - " + subRace
+        case "Half-Orc":
+            strength += 2
+            constitution += 1
+        case "Halfling":
+            dexterity += 2
+            subRace = random.choice(halfling)
+            match subRace:
+                case "Ghostwise":
+                    wisdom += 1
+                case "Lightfoot":
+                    charisma += 1
+                case "Stout":
+                    constitution += 1
+            baseRace += " - " + subRace
+        case "Hobgoblin":
+            constitution += 2
+            intelligence += 1
+        case "Human":
+            strength += 1
+            dexterity += 1
+            constitution += 1
+            intelligence += 1
+            wisdom += 1
+            charisma += 1
+        case "Kenku":
+            dexterity += 2
+            wisdom += 1
+        case "Kobold":
+            dexterity += 2
+            strength -= 2
+        case "Lizardfolk":
+            constitution += 2
+            wisdom += 1
+        case "Orc":
+            strength += 2
+            constitution += 1
+            intelligence -= 2
+        case "Tabaxi":
+            dexterity += 2
+            charisma += 1
+        case "Tiefling":
+            charisma += 2
+            subRace = random.choice(tiefling_lineage)
+            variant = random.choice(tiefling_variants)
+            match subRace:
+                case "Asmodeus":
+                    intelligence += 1
+                case "Baalzebul":
+                    intelligence += 1
+                case "Dispater":
+                    dexterity += 1
+                case "Fierna":
+                    wisdom += 1
+                case "Glasya":
+                    dexterity += 1
+                case "Levistus":
+                    constitution += 1
+                case "Mammon":
+                    intelligence += 1
+                case "Mephistopheles":
+                    intelligence += 1
+                case "Zariel":
+                    strength += 1
+            baseRace += " - " + subRace + " - " + variant
+        case "Tortle":
+            strength += 2
+            wisdom += 1
+        case "Triton":
+            strength += 1
+            constitution += 1
+            charisma += 1
+        case "Yuan-ti Pureblood":
+            charisma += 2
+            intelligence += 1
+
     if strength >= 13:
         classList.extend(["Barbarian","Fighter"])
         if charisma >= 13:
@@ -105,42 +296,9 @@ def randomize():
     if charisma >= 13:
         classList.extend(["Bard", "Sorcerer", "Wizard"])
 
+#or strength+dexterity+constitution+intelligence+wisdom+charisma < 65 if needed
     if not classList:
         return randomize()
-
-    # Subraces based on baseRace
-    match baseRace:
-        case "Aasimar":
-            subRace = random.choice(aasimar)
-            baseRace += " - " + subRace
-        case "Dragonborn":
-            subRace = random.choice(dragonborn)
-            baseRace += " - " + subRace
-        case "Dwarf":
-            subRace = random.choice(dwarf)
-            baseRace += " - " + subRace
-        case "Elf":
-            subRace = random.choice(elf)
-            baseRace += " - " + subRace
-        case "Genasi":
-            subRace = random.choice(genasi)
-            baseRace += " - " + subRace
-        case "Gith":
-            subRace = random.choice(gith)
-            baseRace += " - " + subRace
-        case "Gnome":
-            subRace = random.choice(gnome)
-            baseRace += " - " + subRace
-        case "Half-Elf":
-            subRace = random.choice(half_elf)
-            baseRace += " - " + subRace
-        case "Halfling":
-            subRace = random.choice(halfling)
-            baseRace += " - " + subRace
-        case "Tiefling":
-            subRaceL = random.choice(tiefling_lineage)
-            subRaceV = random.choice(tiefling_variants)
-            baseRace += " - " + subRaceL + " - " + subRaceV
 
     randomClass = random.choice(classList)
     match randomClass:
@@ -173,7 +331,7 @@ def randomize():
         f"Race: {baseRace}\n"
         f"Class: {subClass} {randomClass}\n"
         f"Background: {background}\n"
-        f"Skills: (w/o racial bonuses)\n"
+        f"Skills:\n"
         f"Strength: {strength}\n"
         f"Dexterity: {dexterity}\n"
         f"Constitution: {constitution}\n"
